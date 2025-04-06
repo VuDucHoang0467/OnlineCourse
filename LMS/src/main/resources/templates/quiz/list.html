@@ -1,0 +1,465 @@
+<!doctype html>
+<html class="no-js" lang="zxx"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Home | Courses</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets_courselist/img/favicon.ico">
+
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/assets_courselist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets_courselist/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets_courselist/css/slicknav.css">
+    <link rel="stylesheet" href="/assets_courselist/css/flaticon.css">
+    <link rel="stylesheet" href="/assets_courselist/css/progressbar_barfiller.css">
+    <link rel="stylesheet" href="/assets_courselist/css/gijgo.css">
+    <link rel="stylesheet" href="/assets_courselist/css/animate.min.css">
+    <link rel="stylesheet" href="/assets_courselist/css/animated-headline.css">
+    <link rel="stylesheet" href="/assets_courselist/css/magnific-popup.css">
+    <link rel="stylesheet" href="/assets_courselist/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/assets_courselist/css/themify-icons.css">
+    <link rel="stylesheet" href="/assets_courselist/css/slick.css">
+    <link rel="stylesheet" href="/assets_courselist/css/nice-select.css">
+    <link rel="stylesheet" href="/assets_courselist/css/style.css">
+
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>Courses Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/coursedetail/css/bootstrap.css" />
+    <link rel="stylesheet" href="/coursedetail/css/flaticon.css" />
+    <link rel="stylesheet" href="/coursedetail/css/themify-icons.css" />
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/coursedetail/vendors/owl-carousel/owl.carousel.min.css}">
+    <link rel="stylesheet" href="/coursedetail/vendors/nice-select/css/nice-select.css" />
+    <!-- main css -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/coursedetail/css/style.css}">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/lib/animate.min.css}">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Template Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/stylelearning.css}">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/snow/snow.css}">
+    <style>
+        .btn-primarysave {
+            background: linear-gradient(45deg, greenyellow, #3bb2b8);
+            border: none;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primarysave:hover {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            transform: scale(1.1,1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+</div>
+<th:block th:replace="layout :: header"></th:block>
+<!-- ? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img src="/assets_courselist/img/logo/loder.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Preloader Start -->
+<main>
+    <!--? slider Area Start-->
+    <section class="banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="banner_content text-center">
+                            <h2>Quiz List</h2>
+                            <div class="page_link">
+                                <a href="/">Home</a>
+                                <a href="/courses">Courses</a>
+                                <a href="/courses">Lessons</a>
+                                <a href="/courses">Quizzes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Courses area start -->
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="section-tittle text-center mb-55">
+                        <h2 style="background-image: linear-gradient(to right, #33ccff 0%, #ff99cc 100%);
+           -webkit-background-clip: text;
+           background-clip: text;
+           color: transparent;">
+                            Danh Sách Bài Tập Trắc Nghiệm
+                        </h2>
+
+                    </div>
+                </div>
+            </div>
+            <a class="btn-primarysave" th:href="@{/quizzes/add/{courseId}(courseId=${courseId})}" sec:authorize="hasAnyAuthority('ADMIN')">
+                <i class="fas fa-plus-circle"></i> Thêm bài tập trắc nghiệm mới
+            </a>
+            <div class="col-md-4 mb-4" th:each="quiz : ${quizzes}">
+                <div class="card-body" data-wow-delay="0.1s">
+                    <div class="properties properties2 mb-30">
+                        <div class="properties__card">
+                            <div class="properties__img">
+                                <a href="#"><img th:src="@{/coursedetail/img/courses/multichoice.jpg}" alt="" style="height: 220px; width: 345px; border-top-left-radius: 10px; border-top-right-radius: 10px;"></a>
+                            </div>
+                            <div class="properties__caption">
+                                <div sec:authorize="hasAnyAuthority('ADMIN')">
+                                    <p>
+                                        <i class="fas fa-question-circle"></i>
+                                        <a th:href="@{/quiz-questions/list/{quizId}(quizId=${quiz.id})}"  sec:authorize="hasAnyAuthority('ADMIN')">Danh sách câu hỏi</a>
+                                    </p>
+                                </div>
+                                <p class="card-text">
+                                <span th:text="${quiz.lesson.name}"></span>
+                                </p>
+                                <p th:text="${quiz.title}">The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.
+                                </p>
+                                <p th:text="${quiz.description}">The automated process all your website tasks. Discover tools and techniques to engage effectively with vulnerable children and young people.
+                                </p>
+                                <p class="card-text">
+                                    <span th:text="${quiz.duration} + ' phút'"></span>
+                                </p>
+                                <p>
+                                    <a th:href="@{/quizzes/submissions/{quizId}(quizId=${quiz.id})}">Lịch sử làm bải</a>
+                                </p>
+                                <p>
+                                    <a th:href="@{/quizzes/attempt/{id}(id=${quiz.id})}" class="border-btn border-btn2">
+                                        <i class="fas fa-play-circle"></i>
+                                    </a>
+                                </p>
+                                <div class="card-footer" sec:authorize="hasAnyAuthority('ADMIN')">
+                                    <a th:href="@{/quizzes/edit/{id}(id=${quiz.id})}" class="btn btn-warning btn-sm" sec:authorize="hasAnyAuthority('ADMIN')">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a th:href="@{/quizzes/delete/{id}(id=${quiz.id})}" class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Bạn có chắc muốn xóa bài tập này?');" sec:authorize="hasAnyAuthority('ADMIN')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </div>
+                                <div class="card-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="section-tittle text-center mt-40">
+                        <a href="#" class="border-btn">Load More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Courses area End -->
+    <!--? top subjects Area Start -->
+    <div class="topic-area">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7 col-lg-8">
+                    <div class="section-tittle text-center mb-55">
+                        <h2>Explore top subjects</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img src="/assets_courselist/img/gallery/topic1.png" alt="">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="#">Programing</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img src="/assets_courselist/img/gallery/topic2.png" alt="">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="#">Programing</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img src="/assets_courselist/img/gallery/topic3.png" alt="">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="#">Programing</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img src="/assets_courselist/img/gallery/topic4.png" alt="">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="#">Programing</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img src="/assets_courselist/img/gallery/topic5.png" alt="">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="#">Programing</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img src="/assets_courselist/img/gallery/topic6.png" alt="">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="#">Programing</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img src="/assets_courselist/img/gallery/topic7.png" alt="">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="#">Programing</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="single-topic text-center mb-30">
+                        <div class="topic-img">
+                            <img src="/assets_courselist/img/gallery/topic8.png" alt="">
+                            <div class="topic-content-box">
+                                <div class="topic-content">
+                                    <h3><a href="#">Programing</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xl-12">
+                    <div class="section-tittle text-center mt-20">
+                        <a href="courses.html" class="border-btn">View More Subjects</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- top subjects End -->
+    <!-- ? services-area -->
+    <div class="services-area services-area2 section-padding40">
+        <div class="container">
+            <div class="row justify-content-sm-center">
+                <div class="col-lg-4 col-md-6 col-sm-8">
+                    <div class="single-services mb-30">
+                        <div class="features-icon">
+                            <img src="/assets_courselist/img/icon/icon1.svg" alt="">
+                        </div>
+                        <div class="features-caption">
+                            <h3>60+ UX courses</h3>
+                            <p>The automated process all your website tasks.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-8">
+                    <div class="single-services mb-30">
+                        <div class="features-icon">
+                            <img src="/assets_courselist/img/icon/icon2.svg" alt="">
+                        </div>
+                        <div class="features-caption">
+                            <h3>Expert instructors</h3>
+                            <p>The automated process all your website tasks.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-8">
+                    <div class="single-services mb-30">
+                        <div class="features-icon">
+                            <img src="/assets_courselist/img/icon/icon3.svg" alt="">
+                        </div>
+                        <div class="features-caption">
+                            <h3>Life time access</h3>
+                            <p>The automated process all your website tasks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-3 col-md-6">
+                <h4 class="text-white mb-3">Quick Link</h4>
+                <a class="btn btn-link" href="">About Us</a>
+                <a class="btn btn-link" href="">Contact Us</a>
+                <a class="btn btn-link" href="">Privacy Policy</a>
+                <a class="btn btn-link" href="">Terms & Condition</a>
+                <a class="btn btn-link" href="">FAQs & Help</a>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="text-white mb-3">Liên hệ</h4>
+                <p class="mb-2 text-white"><i class="fa fa-map-marker-alt me-3 text-white"></i>TP.HCM, Việt Nam</p>
+                <p class="mb-2 text-white"><i class="fa fa-phone-alt me-3" text-white></i>+012 345 67890</p>
+                <p class="mb-2 text-white"><i class="fa fa-envelope me-3" text-white></i>info@example.com</p>
+                <div class="d-flex pt-2">
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="text-white mb-3">Hỗ trợ</h4>
+                <p class="text-white">Bạn có câu hỏi hoặc cần hỗ trợ? Hãy để lại email của bạn, và chúng tôi sẽ liên lạc trong thời gian sớm nhất!</p>
+                <div class="position-relative mx-auto" style="max-width: 400px;">
+                    <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                    <button type="button" class="btn btn-primary py-2 position-relative top-0 end-0 mt-2 me-2">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="copyright">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a class="border-bottom" href="">eLearning</a>, All Right Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="footer-menu">
+                        <a href="">Home</a>
+                        <a href="">Cookies</a>
+                        <a href="">Help</a>
+                        <a href="">FQAs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+<!-- JS here -->
+<script src="/assets_courselist/js/vendor/modernizr-3.5.0.min.js"></script>
+<!-- Jquery, Popper, Bootstrap -->
+<script src="/assets_courselist/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/assets_courselist/js/popper.min.js"></script>
+<script src="/assets_courselist/js/bootstrap.min.js"></script>
+<!-- Jquery Mobile Menu -->
+<script src="/assets_courselist/js/jquery.slicknav.min.js"></script>
+
+<!-- Jquery Slick , Owl-Carousel Plugins -->
+<script src="/assets_courselist/js/owl.carousel.min.js"></script>
+<script src="/assets_courselist/js/slick.min.js"></script>
+<!-- One Page, Animated-HeadLin -->
+<script src="/assets_courselist/js/wow.min.js"></script>
+<script src="/assets_courselist/js/animated.headline.js"></script>
+<script src="/assets_courselist/js/jquery.magnific-popup.js"></script>
+
+<!-- Date Picker -->
+<script src="/assets_courselist/js/gijgo.min.js"></script>
+<!-- Nice-select, sticky -->
+<script src="/assets_courselist/js/jquery.nice-select.min.js"></script>
+<script src="/assets_courselist/js/jquery.sticky.js"></script>
+<!-- Progress -->
+<script src="/assets_courselist/js/jquery.barfiller.js"></script>
+
+<!-- counter , waypoint,Hover Direction -->
+<script src="/assets_courselist/js/jquery.counterup.min.js"></script>
+<script src="/assets_courselist/js/waypoints.min.js"></script>
+<script src="/assets_courselist/js/jquery.countdown.min.js"></script>
+<script src="/assets_courselist/js/hover-direction-snake.min.js"></script>
+
+<!-- contact js -->
+<script src="/assets_courselist/js/contact.js"></script>
+<script src="/assets_courselist/js/jquery.form.js"></script>
+<script src="/assets_courselist/js/jquery.validate.min.js"></script>
+<script src="/assets_courselist/js/mail-script.js"></script>
+<script src="/assets_courselist/js/jquery.ajaxchimp.min.js"></script>
+
+<!-- Jquery Plugins, main Jquery -->
+<script src="/assets_courselist/js/plugins.js"></script>
+<script src="/assets_courselist/js/main.js"></script>
+
+</body>
+</html>

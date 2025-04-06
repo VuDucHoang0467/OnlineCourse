@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách khóa học</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="layout::link-css"></th:block>
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/style.css}">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px); /* Di chuyển card lên trên khi hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Tạo hiệu ứng bóng mờ */
+        }
+
+        .course-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .btn-view-details {
+            background-color: #007bff;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-view-details:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+        .card-body p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .card-body p i {
+            color: #007bff;
+            font-size: 1.2rem;
+        }
+
+        .card-title {
+            margin-bottom: 12px;
+        }
+
+        .card-body .rating-info {
+            display: flex;
+            align-items: center;
+            /*gap: 5px;*/
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        .rating-info i {
+            color: #ffcc00; /* Màu vàng cho biểu tượng sao */
+            font-size: 1.2rem; /* Đảm bảo biểu tượng sao nổi bật */
+        }
+
+        .rating-info span {
+            font-weight: bold; /* Làm nổi bật số lượng đánh giá */
+            color: #007bff; /* Màu xanh cho số lượng đánh giá */
+        }
+
+        .rating-info strong {
+            font-weight: bold; /* Làm nổi bật số lượng đánh giá */
+            color: #007bff; /* Màu xanh cho số lượng đánh giá */
+        }
+        .card-text {
+            display: block;
+            white-space: nowrap; /* Không cho phép xuống dòng */
+            overflow: hidden; /* Ẩn nội dung tràn ra ngoài */
+            text-overflow: ellipsis; /* Thêm dấu ba chấm */
+        }
+        .input-group .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+<th:block th:replace="layout::header"></th:block>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4">Danh sách Khóa học</h1>
+            <!-- Form tìm kiếm -->
+            <form th:action="@{/courses/search}" method="get" class="mb-4">
+                <div class="input-group">
+                    <input type="text" name="keyword" class="form-control" placeholder="Nhập tên khóa học cần tìm..."
+                           aria-label="Search" aria-describedby="search-btn">
+                    <button class="btn btn-primary" type="submit" id="search-btn">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+                </div>
+            </form>
+            <form th:action="@{/courses/searchByCatalog}" method="get" class="mb-4">
+                <div class="form-group">
+                    <label for="catalogId" class="mb-3 h4">Chọn danh mục:</label>
+                    <select name="catalogId" id="catalogId" class="form-control" onchange="this.form.submit()">
+                        <option value="0" th:selected="${selectedCatalogId == null or selectedCatalogId == 0}">Tất cả</option>
+                        <option th:each="catalog : ${courseCatalogs}"
+                                th:value="${catalog.id}"
+                                th:text="${catalog.name}"
+                                th:selected="${selectedCatalogId == catalog.id}"></option>
+                    </select>
+                </div>
+            </form>
+            <a class="btn btn-primary mb-3" th:href="@{/courses/add}">
+                <i class="fas fa-plus-circle"></i> Thêm mới
+            </a>
+        </div>
+        <div class="col-md-4 mb-4" th:each="course : ${courses}">
+            <div class="card h-100 shadow-sm">
+                <img th:src="${course.imageData}" alt="Course Image" class="card-img-top course-image">
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${course.name}"></h3>
+
+                    <p class="card-text">
+                        <i class="fas fa-book"></i>
+                        <strong>Loại khóa học:</strong> <span th:text="${course.courseCatalog.name}"></span>
+                    </p>
+
+                    <p class="card-text">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Mô tả:</strong> <span th:text="${course.description}"></span>
+                    </p>
+
+                    <p class="card-text">
+                        <i class="fas fa-clock"></i>
+                        <strong>Thời lượng:</strong> <span th:text="${course.duration} + ' giờ'"></span>
+                    </p>
+
+                    <p class="card-text">
+                        <i class="fas fa-calendar-alt"></i>
+                        <strong>Thời gian tạo:</strong>
+                        <span th:if="${course.creationTime != null}" th:text="${#temporals.format(course.creationTime, 'dd/MM/yyyy HH:mm:ss')}"></span>
+                        <span th:if="${course.creationTime == null}">Chưa xác định</span>
+                    </p>
+
+                    <p class="card-text rating-info">
+                        <i class="fas fa-star"></i>
+                        <strong>Đánh giá:</strong>
+                        <span th:text="${courseRatings[course.id].averageRating != null ? #numbers.formatDecimal(courseRatings[course.id].averageRating, 1, 2) : '0.00'} + ' / 5'"></span>
+                        <span>(<span th:text="${courseRatings[course.id].ratingCount}">0</span> đánh giá)</span>
+                    </p>
+                    <a th:href="@{/courses/details/{id}(id=${course.id})}" class="btn btn-view-details btn-sm">
+                        <i class="fas fa-info-circle"></i> Xem Chi Tiết
+                    </a>
+                </div>
+                <div class="card-footer">
+                    <div sec:authorize="hasAnyAuthority('ADMIN')">
+                        <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-primary btn-sm me-2">
+                            <i class="fas fa-edit"></i> Sửa
+                        </a>
+                        <a th:href="@{/courses/delete/{id}(id=${course.id})}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
+                            <i class="fas fa-trash"></i> Xóa
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="layout::footer"></th:block>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

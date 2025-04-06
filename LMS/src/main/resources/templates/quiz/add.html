@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Bài Tập Trắc Nghiệm</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/lib/animate.min.css}">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Template Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/stylelearning.css}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/snow/snow.css}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #dcdccd, #e8eaec, #b3cde0);
+            font-family: 'Poppins', Arial, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .containercustom {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideIn 1s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .content {
+            flex: 1;
+            padding: 60px;
+            background: linear-gradient(135deg, #71dd8a, #bffc);
+            color: #fff;
+            text-align: center;
+        }
+
+        .content h2 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .content p {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .form-wrapper {
+            flex: 1;
+            padding: 50px;
+            background: #fff;
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .form-wrapper h3 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-align: center;
+            color: #444;
+            font-weight: bold;
+        }
+
+        .form-wrapper label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .form-wrapper input,
+        .form-wrapper textarea,
+        .form-wrapper select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            background: #f5f7fa;
+            font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-wrapper input:focus,
+        .form-wrapper textarea:focus,
+        .form-wrapper select:focus {
+            background: #eaf1f7;
+            box-shadow: 0 0 8px rgba(255, 94, 98, 0.5);
+            transform: scale(1.02);
+        }
+
+        .form-wrapper button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ff5e62, #ff9966);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-wrapper button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+    </style>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+</div>
+<div class="containercustom">
+    <div class="content">
+        <h2>ELEARNING</h2>
+        <p>
+            Chào mừng bạn đến với khóa học trực tuyến của chúng tôi! Tại đây, bạn sẽ được tiếp cận với những kiến thức chuyên sâu và phương pháp học hiện đại. Hãy cùng khám phá và nâng cao trí thức của bạn ngay hôm nay!
+        </p>
+    </div>
+    <div class="form-wrapper">
+        <h3>Thêm Bài Tập</h3>
+        <!-- Form thêm bài tập -->
+        <form th:action="@{/quizzes/add}" th:object="${quiz}" method="post" class="mt-4" enctype="multipart/form-data">
+            <!-- ID khóa học -->
+            <input type="hidden" name="courseId" th:value="${courseId}" />
+            <label for="title">Tiêu đề</label>
+            <input type="text" id="title" name="title" th:field="*{title}" class="form-control" placeholder="Nhập tiêu đề bài tập" required>
+
+            <label for="description">Mô tả</label>
+            <textarea id="description" name="description" th:field="*{description}" class="form-control" rows="3" placeholder="Nhập mô tả bài tập"></textarea>
+
+            <label for="duration">Thời lượng</label>
+            <input class="form-control" type="number" th:field="*{duration}" id="duration" min="1" placeholder="Nhập thời lượng">
+
+            <!-- Dropdown chọn bài học -->
+            <div class="mb-3">
+                <label for="lessonId">Chọn Bài Học:</label>
+                <select name="lessonId" id="lessonId" class="form-control">
+                    <option th:each="lesson : ${lessons}" th:value="${lesson.id}" th:text="${lesson.name}"></option>
+                </select>
+            </div>
+
+            <button type="submit"><i class="fas fa-save"></i> Lưu bài tập</button>
+        </form>
+    </div>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>

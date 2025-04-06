@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Làm Bài Trắc Nghiệm</title>
+    <th:block th:replace="layout :: link-css"></th:block>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/lib/animate.min.css}">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Template Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/stylelearning.css}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/snow/snow.css}">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: powderblue;
+        }
+        .containerquiz {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Left Section */
+        .image-section {
+            width: 40%;
+            background-color: #daf0f4;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-section img {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+        }
+        .imgquizz {
+            top: 290px;
+        }
+        .btnquizz {
+            position: absolute;
+            margin-bottom: 30px;
+            top: 325px;
+            left: 175px;
+            width: 140px;
+            height: 40px;
+            background-color: #ffffff;
+            color: #00a9ce;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #00a9ce;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .quiztitle {
+            position: absolute;
+            top: 20px;
+            left: 145px;
+            width: 200px;
+            height: 90px;
+            background-color: #ffffff;
+            color: #00a9ce;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #00a9ce;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .circle-number {
+            position: absolute;
+            top: 120px;
+            left: 175px;
+            width: 140px;
+            height: 73px;
+            background-color: #ffffff;
+            color: #00a9ce;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid #00a9ce;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        /* Right Section */
+        .quiz-section {
+            width: 60%;
+            padding: 40px;
+            background-color: #fff;
+        }
+        .quiz-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+        @media (max-width: 768px) {
+            .containerquiz {
+                flex-direction: column;
+            }
+            .image-section, .quiz-section {
+                width: 100%;
+            }
+        }
+        h1 {
+            color: #343a40;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .container mt-5 {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 20px 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        .form-check {
+            position: relative;
+            margin-bottom: 15px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .form-check:hover {
+            border-color: #00a9ce;
+            background-color: #e6f7fc;
+        }
+        .form-check input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #00a9ce;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .form-check input[type="radio"]:checked {
+            background-color: #00a9ce;
+            border-color: #008fb0;
+        }
+        .form-check input[type="radio"]:checked ~ .form-check-label {
+            font-weight: bold;
+            color: #fff;
+        }
+        .form-check:has(input[type="radio"]:checked) {
+            background-color: #00a9ce;
+            color: #fff;
+            border-color: #00a9ce;
+        }
+        .form-check-label {
+            margin-left: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #495057;
+            transition: color 0.3s ease;
+        }
+        .form-check:hover .form-check-label {
+            color: #00a9ce;
+        }
+        label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #495057;
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #ff5e62, #ff9966);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
+        .btn-success:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        a {
+            text-decoration: none;
+        }
+
+        /* Đồng hồ đếm ngược */
+        #timer {
+            font-size: 2rem; /* Tăng kích thước */
+            font-weight: bold;
+            color: #ff3b3b; /* Màu đỏ đậm để nhấn mạnh */
+            background: linear-gradient(45deg, #ff6161, #ff3b3b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* Chỉ giữ gradient */
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        /* Nút bắt đầu */
+        #startQuiz {
+            background: linear-gradient(135deg, #ff5e62, #ff9966);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        #startQuiz:hover {
+            background: linear-gradient(135deg, #71dd8a, #bffc);
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+</div>
+<th:block th:replace="layout::header"></th:block>
+<div class="containerquiz">
+    <!-- Left Section -->
+    <div class="image-section">
+        <div class="circle-number" id="timer" th:text="${quiz.duration} + ':00'">00:00</div>
+        <h4 th:text="${quiz.title}" class="quiztitle">Quiz</h4>
+        <button type="button" class="btnquizz" id="startQuiz">
+            Bắt đầu
+        </button>
+        <img th:src="@{/coursedetail/img/courses/thinking.jpg}" alt="Person Thinking" class="imgquizz">
+    </div>
+    <!-- Right Section -->
+    <div class="quiz-section">
+        <form th:action="@{/quizzes/submit}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="userId" th:value="${userId}"> <!-- ID người dùng -->
+            <input type="hidden" name="courseId" th:value="${courseId}"> <!-- ID khóa học -->
+            <input type="hidden" name="quizId" th:value="${quiz.id}"> <!-- ID quiz -->
+            <!-- Danh sách câu hỏi -->
+            <div th:each="question : ${questions}" class="quiz-section">
+                <h4 th:text="${question.content}"></h4>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" th:id="'optionA-' + ${question.id}" th:name="${question.id}" value="A">
+                    <label class="form-check-label" th:for="'optionA-' + ${question.id}" th:text="'A. ' + ${question.optionA}"></label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" th:id="'optionB-' + ${question.id}" th:name="${question.id}" value="B">
+                    <label class="form-check-label" th:for="'optionB-' + ${question.id}" th:text="'B. ' + ${question.optionB}"></label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" th:id="'optionC-' + ${question.id}" th:name="${question.id}" value="C">
+                    <label class="form-check-label" th:for="'optionC-' + ${question.id}" th:text="'C. ' + ${question.optionC}"></label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" th:id="'optionD-' + ${question.id}" th:name="${question.id}" value="D">
+                    <label class="form-check-label" th:for="'optionD-' + ${question.id}" th:text="'D. ' + ${question.optionD}"></label>
+                </div>
+            </div>
+            <!-- Nút nộp bài -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">
+                    Nộp bài
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const timerElement = document.getElementById("timer");
+        const startButton = document.getElementById("startQuiz");
+        const formInputs = document.querySelectorAll("form input"); // Các trường trong form
+        const submitButton = document.querySelector("button[type='submit']"); // Nút "Nộp bài"
+        let timeLeft = [[${quiz.duration * 60}]]; // Lấy thời gian từ model (đổi phút sang giây)
+
+        // Vô hiệu hóa form ban đầu
+        function disableForm(disabled) {
+            formInputs.forEach(input => input.disabled = disabled);
+            submitButton.disabled = disabled; // Vô hiệu hóa nút "Nộp bài"
+        }
+
+        // Khởi tạo: Vô hiệu hóa form
+        disableForm(true);
+
+        function startTimer() {
+            // Bật lại form khi bấm "Bắt đầu"
+            disableForm(false);
+
+            // Vô hiệu hóa nút "Bắt đầu"
+            startButton.disabled = true;
+            startButton.style.display = "none"; // Ẩn nút "Bắt đầu"
+
+            // Bắt đầu đếm ngược
+            const timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+
+                timerElement.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Hết thời gian! Hệ thống sẽ không ghi nhận kết quả.");
+                    submitButton.click(); // Tự động bấm nút "Nộp bài"
+                }
+
+                timeLeft--;
+            }, 1000);
+        }
+
+        // Sự kiện bấm nút "Bắt đầu"
+        startButton.addEventListener("click", startTimer);
+    });
+</script>
+
+<!-- Nút quay về đầu trang -->
+<button class="back-to-top" id="backToTop">
+    <i class="fa fa-chevron-up"></i>
+</button>
+
+<script>
+    // Hiển thị nút quay về đầu trang khi cuộn
+    const backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+
+    // Cuộn mượt mà về đầu trang khi nhấn nút
+    backToTopButton.addEventListener('click', () => {
+        document.documentElement.classList.add('scroll-animation'); // Thêm hiệu ứng
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Xóa hiệu ứng sau khi hoàn tất
+        setTimeout(() => {
+            document.documentElement.classList.remove('scroll-animation');
+        }, 1000);
+    });
+</script>
+
+<th:block th:replace="layout::footer"></th:block>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</body>
+</html>

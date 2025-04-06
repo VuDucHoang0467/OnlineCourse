@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/snow/snow.css}">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(90deg, #fbc2eb 0%, #a6c1ee 100%);
+            color: #333;
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto; /* Thêm khoảng cách với viền của trình duyệt */
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .leaderboard {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .leaderboard-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            background-image: linear-gradient(to right, #89f7fe, #66a6ff); /* Màu gradient */
+            -webkit-background-clip: text; /* Áp dụng gradient cho text */
+            color: transparent;
+            margin: 0;
+        }
+
+        .leaderboard-header .filters button {
+            background-color: #e5e7eb;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .leaderboard-header .filters button.active {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .rank {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .rank span {
+            font-size: 14px;
+            font-weight: bold;
+            margin-left: 8px; /* Khoảng cách giữa ảnh và text */
+            vertical-align: middle;
+        }
+
+        .rank img {
+            vertical-align: middle; /* Giúp ảnh và text cùng dòng */
+        }
+
+        /* Phong cách đổi màu theo rank */
+        .rank span[data-badge="Champion"] {
+            color: gold;
+        }
+
+        .rank span[data-badge="Master"] {
+            color: silver;
+        }
+
+        .rank span[data-badge="Achiever"] {
+            color: #997404;
+        }
+
+        .rank span[data-badge="Learner"] {
+            color: gray;
+        }
+
+        .country {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .time{
+            font-weight: 600;
+            color: #fbbf24;
+            align-items: center;
+        }
+
+        .time img{
+            margin-right: 8px;
+            width: 16px;
+        }
+
+        .badge {
+            font-weight: 600;
+            color: #fbbf24;
+            align-items: center;
+        }
+
+        .badge img {
+            margin-right: 8px;
+            width: 16px;
+        }
+
+        .currentUser {
+            display: flex;
+            align-items: center;
+        }
+
+        .currentUser img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile div span {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .search-bar {
+            padding: 10px 20px;
+            margin: 15px 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            width: calc(100% - 80px);
+        }
+        /* Container styling */
+        .current-user-info {
+            display: flex;
+            align-items: center;
+            border: 2px solid #ccc; /* Đường viền bao quanh */
+            padding: 5px;
+            border-radius: 8px; /* Bo góc */
+            max-width: 400px; /* Tùy chỉnh chiều rộng */
+            background-color: #f9f9f9; /* Màu nền */
+        }
+
+        /* Rank container styling */
+        .user-rank {
+            display: flex;
+            flex-direction: column; /* Hiển thị theo cột */
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        /* Rank image styling */
+        .rank-image {
+            width: 40px; /* Kích thước ảnh rank */
+            height: 40px;
+            margin-bottom: 5px;
+        }
+
+        /* Rank text styling */
+        .rank-text {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Phong cách riêng cho từng rank */
+        .rank-text[data-badge="Champion"] {
+            color: gold;
+        }
+
+        .rank-text[data-badge="Master"] {
+            color: silver;
+        }
+
+        .rank-text[data-badge="Learner"] {
+            color: #997404;
+        }
+
+        .rank-text[data-badge="Beginner"] {
+            color: gray;
+        }
+
+        /* Styling cho ảnh đại diện */
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Styling cho tên người dùng */
+        .user-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-right: 10px; /* Khoảng cách giữa tên và ký tự phân cách */
+        }
+
+        /* Styling cho ký tự phân cách */
+        .current-user-info span {
+            margin: 0 10px; /* Khoảng cách xung quanh | */
+            font-weight: bold;
+            color: #666;
+        }
+
+        /* Styling cho điểm */
+        .user-points {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Styling cho biểu tượng điểm */
+        .points-icon {
+            width: 20px; /* Kích thước biểu tượng */
+            height: 20px;
+            margin-right: 5px; /* Khoảng cách giữa biểu tượng và số điểm */
+        }
+        .user-badge {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Phong cách riêng cho từng rank */
+        .user-badge[data-badge="Champion"] {
+            color: gold;
+        }
+
+        .user-badge[data-badge="Master"] {
+            color: silver;
+        }
+
+        .user-badge[data-badge="Achiever"] {
+            color: #997404;
+        }
+
+        .user-badge[data-badge="Learner"] {
+            color: gray;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px; /* Khoảng cách giữa ô tìm kiếm và nút tìm */
+            width: 100%;
+        }
+
+        .search-bar {
+            flex-grow: 1; /* Để ô tìm kiếm chiếm toàn bộ không gian còn lại */
+            padding: 10px 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background-color: #2563eb;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, rgba(255, 99, 132, 0.3), rgba(54, 162, 235, 0.3));
+            backdrop-filter: blur(20px);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            animation: gradientAnimation 10s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.03);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff758c 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(255, 120, 180, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.5);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        th {
+            background: linear-gradient(90deg, #a6c1ee, #fbc2eb);
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        tbody tr:nth-child(odd) {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        tbody tr:hover {
+            background: linear-gradient(90deg, #fbc2eb, #a6c1ee);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .rank span {
+            display: inline-block;
+            padding: 5px 10px;
+            font-weight: 600;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .rank span[data-badge="Champion"] {
+            background: gold;
+            animation: glow 1s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px gold; }
+            100% { box-shadow: 0 0 20px gold; }
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+</div>
+<div class="container">
+    <div class="header">
+        <!-- "Hello" và ngày tháng -->
+        <div class="hello">
+            <h1 th:text="'Hello, ' + ${currentUsername}"></h1>
+
+        </div>
+        <span style="background-image: linear-gradient(to right, #ed6ea0, #ec8c69); /* Màu gradient */
+    -webkit-background-clip: text; /* Áp dụng gradient cho text */
+    color: transparent;" id="current-date-time"></span>
+        <!-- Ảnh, tên, và điểm số của user -->
+        <div class="current-user-info">
+            <p class="user-name" th:text="'Hạng:' + ${currentUserRank}"></p>
+            <span>|</span>
+            <!-- Ảnh đại diện -->
+            <img th:src="${currentUserData.profilepic}" alt="Profile Picture" class="profile-pic">
+
+            <!-- Tên người dùng -->
+            <p class="user-name" th:text="${currentUsername}"></p>
+
+            <!-- Ký tự phân cách -->
+            <span>|</span>
+
+            <!-- Điểm và biểu tượng -->
+            <p class="user-points">
+                <img src="/coursedetail/img/courses/fire.png" alt="Points Icon" class="points-icon">
+                <span th:text="${currentUserData.totalPoints}"></span>
+            </p>
+
+            <!-- Ký tự phân cách -->
+            <span>|</span>
+
+            <!-- Rank của user -->
+            <div class="user-rank">
+                <img th:src="'/coursedetail/img/leaderboard/' + ${currentUserData.badge.toLowerCase()} + '.png'"
+                     alt="Rank Image" class="rank-image">
+                <span th:text="${currentUserData.badge}" th:attr="data-badge=${currentUserData.badge}" class="rank-text"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="leaderboard">
+        <div class="leaderboard-header">
+            <h2>BẢNG XẾP HẠNG</h2>
+            <div class="filters">
+                <button onclick="window.location.href='/leaderboard?sortBy=points'">Tổng điểm</button>
+                <button onclick="window.location.href='/leaderboard?sortBy=studyTime'">Giờ học</button>
+                <button onclick="window.location.href='/leaderboard?sortBy=completedCourses'">Khóa học hoàn thành</button>
+            </div>
+        </div>
+
+        <form method="get" action="/leaderboard">
+            <div class="search-container">
+                <input type="text" class="search-bar" name="search" placeholder="Tìm kiếm theo tên...">
+                <button type="submit">Tìm</button>
+            </div>
+        </form>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Hạng</th>
+                <th>Tên người dùng</th>
+                <th>Tổng thời gian học (giờ)</th>
+                <th>Số khóa học đã hoàn thành</th>
+                <th>Tổng điểm</th>
+                <th>Huy hiệu</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user, iterStat : ${leaderboard}">
+                <td class="rank">
+                    <!-- Hiển thị huy chương cho top 1, 2, 3 -->
+                    <img th:if="${user.rank == 1}" src="/coursedetail/img/leaderboard/medalgold.png" alt="Gold Medal" style="width: 20px; box-shadow: 0 0 15px gold;">
+                    <img th:if="${user.rank == 2}" src="/coursedetail/img/leaderboard/medalsilver.png" alt="Silver Medal" style="width: 20px; box-shadow: 0 0 15px gray;">
+                    <img th:if="${user.rank == 3}" src="/coursedetail/img/leaderboard/medalbronze.png" alt="Bronze Medal" style="width: 20px; box-shadow: 0 0 15px #997404;">
+                    <!-- Hiển thị số thứ tự cho hạng 4 trở đi -->
+                    <span th:if="${user.rank > 3}" th:text="${user.rank}"></span>
+                </td>
+                <td class="profile">
+                    <img th:src="${user.profilepic}" alt="Profile">
+                    <span th:text="${user.name}"></span>
+                </td>
+                <td class="time">
+                    <img src="/coursedetail/img/courses/time.png" alt="Total study time">
+                    <span th:text="${user.totalStudyTime} + ' giờ'"></span>
+                </td>
+                <td class="time">
+                    <img src="/coursedetail/img/courses/book.png" alt="Total completed course">
+                    <span th:text="${user.completedCourses}"></span>
+                </td>
+                <td class="badge">
+                    <img src="/coursedetail/img/courses/fire.png" alt="Points">
+                    <span th:text="${user.totalPoints}"></span>
+                </td>
+                <td class="rank">
+                    <img th:src="'/coursedetail/img/leaderboard/' + ${user.badge.toLowerCase()} + '.png'"
+                         alt="Rank Image" style="height: 40px;">
+                    <span class="rank-text" th:text="${user.badge}" th:attr="data-badge=${user.badge}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    function updateDateTime() {
+        const dateTimeElement = document.getElementById('current-date-time');
+        const now = new Date();
+
+        // Định dạng ngày và giờ
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        };
+        const formattedDateTime = now.toLocaleDateString('vi-VN', options);
+
+        // Cập nhật nội dung
+        dateTimeElement.textContent = formattedDateTime;
+    }
+
+    // Gọi hàm và cập nhật mỗi giây
+    setInterval(updateDateTime, 1000);
+
+    // Gọi ngay khi trang tải lần đầu
+    updateDateTime();
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy tất cả các nút filter
+        const buttons = document.querySelectorAll('.leaderboard-header .filters button');
+
+        // Lặp qua tất cả các nút để thêm sự kiện click
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                // Xóa lớp 'active' khỏi tất cả các nút
+                buttons.forEach(function(btn) {
+                    btn.classList.remove('active');
+                });
+
+                // Thêm lớp 'active' vào nút đang được nhấn
+                button.classList.add('active');
+            });
+        });
+    });
+</script>
+
+</html>

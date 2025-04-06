@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Khóa Học</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/lib/animate.min.css}">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Template Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/stylelearning.css}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/snow/snow.css}">
+    <style>
+
+        .category-item {
+            opacity: 0.5;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .category-item.active {
+            opacity: 1; /* Làm nổi bật mục được chọn */
+        }
+
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .containerform {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px 30px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            border-radius: 12px;
+            color: #fff;
+        }
+
+        .section-header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .section-header i {
+            font-size: 2rem;
+        }
+
+        .category-selector {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .category-item {
+            flex: 1;
+            margin: 0 10px;
+            padding: 20px;
+            background: #eef2ff;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .category-item.active {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            color: #ffffff;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-item:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #42e695, #3bb2b8);
+            color: #ffffff;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        .form-control:focus {
+            border-color: #42e695;
+            box-shadow: 0 0 5px rgba(66, 230, 149, 0.5);
+        }
+
+        .btn-primarysave {
+            background: linear-gradient(45deg, #42e695, #3bb2b8);
+            border: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 12px 25px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primarysave:hover {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .text-danger {
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+</div>
+<th:block th:replace="layout :: header"></th:block>
+<div class="containerform">
+    <!-- Header Section -->
+    <div class="section-header">
+        <h1>Thêm Khóa Học</h1>
+        <i class="fas fa-graduation-cap"></i>
+    </div>
+
+    <!-- Category Selector -->
+
+
+    <!-- Form -->
+    <form th:action="@{/courses/add}" th:object="${course}" method="post" novalidate enctype="multipart/form-data">
+        <!-- Tên khóa học -->
+        <div class="mb-3">
+            <label for="name">Tên Khóa Học</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Nhập tên khóa học">
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <!-- Mô tả -->
+        <div class="mb-3">
+            <label for="description">Mô Tả</label>
+            <textarea class="form-control" id="description" th:field="*{description}" rows="4" placeholder="Nhập mô tả khóa học"></textarea>
+            <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        </div>
+
+        <!-- Thời lượng -->
+        <div class="mb-3">
+            <label for="duration">Thời Lượng (giờ)</label>
+            <input type="number" class="form-control" id="duration" th:field="*{duration}" min="1" placeholder="Nhập thời lượng">
+            <div class="text-danger" th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></div>
+        </div>
+
+        <!-- Category Selector -->
+        <div class="mb-3">
+            <label for="duration">Loại khóa học</label>
+        </div>
+        <div class="category-selector">
+            <div th:each="catalog : ${courseCatalogs}" class="category-item" th:classappend="${catalog.id == activeCatalogId} ? 'active'">
+                <i class="fas fa-graduation-cap fa-2x"></i>
+                <p th:text="${catalog.name}">Tên danh mục</p>
+                <input type="radio" th:field="*{courseCatalog.id}" th:value="${catalog.id}" style="display:none;">
+            </div>
+        </div>
+
+        <!-- Ảnh -->
+        <div class="mb-3">
+            <label for="image">Ảnh Khóa Học</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+
+        <!-- Nút Lưu -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primarysave">Lưu Khóa Học</button>
+        </div>
+    </form>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+<script>
+    // Lấy tất cả các mục danh mục và radio buttons
+    const categoryItems = document.querySelectorAll('.category-item');
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+
+    // Lắng nghe sự kiện click trên từng mục danh mục
+    categoryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            // Gán giá trị cho radio button tương ứng
+            radioButtons[index].checked = true;
+
+            // Xóa lớp 'active' khỏi tất cả các mục danh mục
+            categoryItems.forEach((el) => el.classList.remove('active'));
+
+            // Thêm lớp 'active' vào mục danh mục được chọn
+            item.classList.add('active');
+        });
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

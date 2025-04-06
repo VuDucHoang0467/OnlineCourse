@@ -1,0 +1,628 @@
+
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" >
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ProBootstrap:Enlight &mdash; Free Bootstrap Theme, Free Responsive Bootstrap Website Template</title>
+    <meta name="description" content="Free Bootstrap Theme by ProBootstrap.com">
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+    <!--Lesson video css-->
+    <!-- Bootstrap core CSS -->
+    <link href="/lessonvideo/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="/lessonvideo/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="/lessonvideo/assets/css/templatemo-edu-meeting.css">
+    <link rel="stylesheet" href="/lessonvideo/assets/css/owl.css">
+    <link rel="stylesheet" href="/lessonvideo/assets/css/lightbox.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700|Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="/lesson/css/styles-merged.css">
+    <link rel="stylesheet" href="/lesson/css/style.min.css">
+    <link rel="stylesheet" href="/lesson/css/custom.css">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="/coursedetail/css/bootstrap.css" />
+    <link rel="stylesheet" href="/coursedetail/css/flaticon.css" />
+    <link rel="stylesheet" href="/coursedetail/css/themify-icons.css" />
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/coursedetail/vendors/owl-carousel/owl.carousel.min.css}">
+    <link rel="stylesheet" href="/coursedetail/vendors/nice-select/css/nice-select.css" />
+    <!-- main css -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/coursedetail/css/style.css}">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/lib/animate.min.css}">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <!-- Template Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/stylelearning.css}">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/snow/snow.css}">
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .lesson-header {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            padding: 30px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .lesson-header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .video-section {
+            position: sticky;
+            top: 0;
+        }
+
+        .video-container {
+            border: 2px solid #6a11cb;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+        }
+
+        .lesson-list {
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f8f9fa;
+        }
+
+        .lesson-title {
+            font-size: 18px;
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lesson-item {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .lesson-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lesson-info .text-muted {
+            font-size: 1.2rem;
+            margin-top: 5px;
+            color: #6c757d; /* Màu chữ nhẹ */
+        }
+
+        .lesson-item {
+            font-size: 1.5rem;
+            color: red;
+        }
+
+        .lesson-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .action-buttons .btn {
+            padding: 5px 15px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .action-buttons .btn {
+            padding: 10px 20px; /* Tăng kích thước padding để nút to hơn */
+            font-size: 1.2rem;   /* Tăng kích thước chữ */
+            border-radius: 30px; /* Nếu muốn góc bo tròn hơn */
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-edit, .btn-delete {
+            padding: 12px 24px;  /* Tăng kích thước nút chỉnh sửa và xóa */
+            font-size: 1.3rem;    /* Tăng kích thước chữ cho nút sửa và xóa */
+            border-radius: 50px;  /* Tăng độ bo tròn */
+        }
+
+        .btn-info {
+            padding: 8px 16px;  /* Tăng kích thước nút chỉnh sửa và xóa */
+            font-size: 1.3rem;    /* Tăng kích thước chữ cho nút sửa và xóa */
+            border-radius: 50px;  /* Tăng độ bo tròn */
+            background: linear-gradient(to right, greenyellow, cornflowerblue);
+        }
+
+        .btn-info i{
+            font-size: 1.5rem; /* Tăng kích thước icon trong nút */
+        }
+
+        .btn-edit i, .btn-delete, .btn-info i {
+            font-size: 1.5rem; /* Tăng kích thước icon trong nút */
+        }
+
+        /* Hiệu ứng hover (tăng hiệu ứng khi di chuột) */
+        .btn-edit:hover, .btn-delete:hover, .btn-info:hover {
+            transform: scale(1.2); /* Tăng kích thước nút khi hover */
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3); /* Hiệu ứng shadow */
+        }
+
+        .btn-edit {
+            background: linear-gradient(to right, lightcoral, #00f2fe);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-edit i {
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .btn-edit:hover {
+            background: linear-gradient(to right, red, #0072ff);
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn-delete {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-delete i {
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .btn-delete:hover {
+            background: linear-gradient(to right, #ff4b2b, #ff416c);
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+        }
+        .icon-btn {
+            background: none;
+            border: none;
+            padding: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            transform: scale(1.2);
+            color: #2575fc; /* Màu xanh khi hover */
+        }
+
+        .icon-btn i {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-muted {
+            font-size: 16px;
+            color: #FFFFFF !important; /* Màu xám nhạt cho trạng thái chưa hoàn thành */
+        }
+
+        .text-success {
+            color: #28a745 !important; /* Màu xanh lá cho trạng thái hoàn thành */
+        }
+
+        .text-danger {
+            color: #dc3545 !important; /* Màu đỏ cho nút xóa */
+        }
+
+
+        .fa-check-circle.text-success {
+            animation: scaleUp 0.3s ease-in-out;
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.8);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .banner_area {
+            margin-bottom: 50px;
+        }
+        .toggle-quiz-list {
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-quiz-list.fa-chevron-up {
+            transform: rotate(180deg);
+        }
+        .text-success {
+            color: green;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .fa-check-circle {
+            color: green;
+            margin-left: 5px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+</div>
+<th:block th:replace="layout :: header"></th:block>
+<!--? slider Area Start-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="banner_content text-center">
+                        <h2>Lessons</h2>
+                        <div class="page_link">
+                            <a href="/">Home</a>
+                            <a href="/courses">Courses</a>
+                            <a>Lessons</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Courses area start -->
+<section class="probootstrap-section probootstrap-section-colored">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-left section-heading probootstrap-animate">
+                <h1>Course's Lesson</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="our-facts">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <!--Hiển thị danh sách bài học-->
+                    <h2 style="background-image: linear-gradient(to right, #33ccff 0%, #ff99cc 100%);
+           -webkit-background-clip: text;
+           background-clip: text;
+           color: transparent;">
+                        Danh sách bài học
+                    </h2>
+                    <div th:each="lesson, iterStat : ${lessons}"
+                         class="lesson-item d-flex  align-items-center" style="background-color: rgba(250, 250, 250, 0.15);"
+                         th:data-lesson-id="${lesson.id}"
+                         th:data-url="${lesson.videoUrl}"
+                         th:data-description="${lesson.description}">
+                        <div class="lesson-info d-flex flex-column align-items-start gap-1">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="fa fa-play-circle"></i>
+                                <span class="lesson-title" style="color: #f5a425;" th:text="${lesson.name}"></span>
+                            </div>
+                            <!-- Mũi tên xổ danh sách trắc nghiệm -->
+                            <i class="fas fa-chevron-down toggle-quiz-list" style="cursor: pointer;"></i>
+                            <!-- Ngày tạo -->
+                            <span class="text-muted" th:if="${lesson.creationTime != null}" th:text="'Ngày cập nhật: ' + ${#temporals.format(lesson.creationTime, 'dd/MM/yyyy HH:mm:ss')}"></span>
+                            <span class="text-muted" th:if="${lesson.creationTime == null}">Ngày cập nhật: Chưa xác định</span>
+                        </div>
+                        <a id="quizListButton" th:href="@{/quizzes/list/{courseId}/{lessonId}(courseId=${courseId}, lessonId=${lesson.id})}"
+                           class="btn btn-info btn-sm"
+                           th:onclick="|return checkLessonCompletion(${lesson.id}, event);|">
+                            <i class="fas fa-question-circle"></i>
+                        </a>
+                        <div class="action-buttons d-flex gap-2 align-items-center">
+                            <!-- Nút Sửa -->
+                            <a th:href="@{/lessons/edit/{lessonId}(lessonId=${lesson.id})}" class="btn btn-edit shadow-sm" sec:authorize="hasAnyAuthority('ADMIN')">
+                                <i class="fa fa-pencil-alt"></i>
+                            </a>
+                            <!-- Nút Xóa -->
+                            <a th:href="@{/lessons/delete/{lessonId}(lessonId=${lesson.id})}"
+                               class="btn btn-delete shadow-sm"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa bài học này?');" sec:authorize="hasAnyAuthority('ADMIN')">
+                                <i class="fa fa-trash-alt"></i>
+                            </a>
+                        </div>
+                        <li class="justify-content-between d-flex">
+                            <span th:if="${lessonCompletedMap[lesson.id]}"><img src="/img/check.png" alt="Icon" style="width: 20px;height: 20px" /></span>
+                            <!--<span th:if="${!lessonCompletedMap[lesson.id]}"><img src="/img/error.png" alt="Icon" style="width: 20px;height: 20px" /></span>-->
+                        </li>
+                        <!-- Danh sách các bài trắc nghiệm -->
+                        <div class="quiz-list" style="display: none; margin-top: 10px;">
+                            <div th:each="quiz : ${lesson.quizzes}">
+                                <!-- Kiểm tra xem bài quiz đã được hoàn thành hay chưa -->
+                                <a th:href="@{/quizzes/list/{courseId}/{lessonId}(courseId=${courseId}, lessonId=${lesson.id})}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-question-circle"></i> <span th:text="${quiz.title}"></span>
+
+                                    <!-- Dấu tick nếu người dùng đã hoàn thành -->
+                                    <span th:if="${completedQuizMap[quiz.id]}">
+                    <img src="/img/check.png" alt="Icon" style="width: 20px;height: 20px" />
+                </span>
+                                </a>
+                            </div>
+                        </div>
+                        <p th:if="${lessons.isEmpty()}" class="text-center text-muted mt-3">Chưa có bài học nào trong khóa học này.</p>
+                    </div>
+                </div>
+                <!--Kết thúc danh sách bài học-->
+            </div>
+            <div class="col-lg-6 align-self-center">
+                <div class="video">
+                    <div class="video-container">
+                        <video id="lessonVideo" controls controlslist="nodownload" th:data-lesson-id="${lessons[0]?.id}">
+                            <source id="videoSource" th:src="${lessons[0]?.videoUrl}" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 video-section">
+            <p id="lessonDescription" class="mt-3 text-muted" th:text="${lessons[0]?.description}"></p>
+        </div>
+    </div>
+</section>
+
+<section class="probootstrap-cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="probootstrap-animate" data-animate-effect="fadeInRight">Get your admission now!</h2>
+                <a href="#" role="button" class="btn btn-primary btn-lg btn-ghost probootstrap-animate" data-animate-effect="fadeInLeft">Enroll</a>
+            </div>
+        </div>
+    </div>
+</section>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const videoElement = document.getElementById('lessonVideo');
+
+        // Kiểm tra khi video phát xong
+        videoElement.addEventListener('ended', () => {
+            // Lấy ID bài học từ thuộc tính data
+            const currentLessonId = videoElement.getAttribute('data-lesson-id');
+
+            if (currentLessonId) {
+                // Gửi yêu cầu đánh dấu hoàn thành bài học
+                fetch(`/api/lessons/${currentLessonId}/complete`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Bài học đã được đánh dấu hoàn thành!');
+                        } else {
+                            console.error('Đánh dấu hoàn thành thất bại.');
+                        }
+                    })
+                    .catch(error => console.error('Có lỗi xảy ra:', error));
+            }
+        });
+
+        // Thay đổi video và gán data-lesson-id khi chọn bài học
+        const lessonItems = document.querySelectorAll('.lesson-item');
+        lessonItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const lessonId = item.getAttribute('data-lesson-id');
+                videoElement.setAttribute('data-lesson-id', lessonId);
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const lessonItems = document.querySelectorAll('.lesson-item');
+        const videoElement = document.getElementById('lessonVideo');
+
+        lessonItems.forEach((item, index) => {
+            item.addEventListener('click', async () => {
+                const lessonId = item.getAttribute('data-lesson-id');
+                const prevLessonId = index > 0 ? lessonItems[index - 1].getAttribute('data-lesson-id') : null;
+
+                // Kiểm tra trạng thái hoàn thành bài học trước (nếu có)
+                if (prevLessonId) {
+                    const isPrevLessonCompleted = await checkLessonCompletion(prevLessonId);
+                    if (!isPrevLessonCompleted) {
+                        alert('Bạn cần hoàn thành bài học trước để xem bài này.');
+                        return;
+                    }
+                }
+
+                // Cập nhật video
+                const videoUrl = item.getAttribute('data-url');
+                const description = item.getAttribute('data-description');
+                videoElement.setAttribute('data-lesson-id', lessonId);
+                document.getElementById('videoSource').src = videoUrl;
+                document.getElementById('lessonVideo').load();
+                document.getElementById('lessonDescription').textContent = description || "Không có mô tả.";
+            });
+        });
+
+        async function checkLessonCompletion(lessonId) {
+            try {
+                const response = await fetch(`/api/lessons/${lessonId}/status`);
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    console.error('Không thể kiểm tra trạng thái bài học:', response.status);
+                    return false;
+                }
+            } catch (error) {
+                console.error('Lỗi khi kiểm tra trạng thái bài học:', error);
+                return false;
+            }
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Kiểm tra trạng thái hoàn thành bài học trước khi cho phép làm bài tập trắc nghiệm
+        window.checkLessonCompletion = async function (lessonId, event) {
+            event.preventDefault();
+            // Kiểm tra trạng thái bài học trước
+            const isCompleted = await checkLessonCompletionStatus(lessonId);
+            // Nếu bài học chưa hoàn thành, ngừng sự kiện mặc định của liên kết (chuyển trang)
+            if (!isCompleted) {
+                alert('Bạn cần hoàn thành video bài học trước để truy cập bài tập trắc nghiệm.');
+                return false;
+            } else {
+                // Lấy phần tử <a> (quizListButton) mà người dùng đã nhấn
+                const quizListButton = event.target.closest('a');
+                if (quizListButton) {
+                    // Chuyển hướng đến URL bài tập trắc nghiệm
+                    window.location.href = quizListButton.getAttribute('href');
+                } else {
+                    alert('Không tìm thấy quizListButton.');
+                }
+            }
+        };
+
+        // Gọi API để kiểm tra trạng thái hoàn thành bài học
+        async function checkLessonCompletionStatus(lessonId) {
+            try {
+                const response = await fetch(`/api/lessons/${lessonId}/status`);
+                if (response.ok) {
+                    const data = await response.json();
+                    return data; // Trả về trạng thái hoàn thành (true hoặc false)
+                } else {
+                    console.error('Không thể kiểm tra trạng thái bài học:', response.status);
+                    return false;
+                }
+            } catch (error) {
+                console.error('Lỗi khi kiểm tra trạng thái bài học:', error);
+                return false;
+            }
+        }
+    });
+
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy tất cả các mũi tên (toggle quiz list)
+        const toggleButtons = document.querySelectorAll('.toggle-quiz-list');
+
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Tìm phần tử danh sách quiz tương ứng với bài học
+                const quizList = button.closest('.lesson-item').querySelector('.quiz-list');
+
+                // Kiểm tra trạng thái hiện tại của quizList (đang ẩn hay hiện)
+                const isVisible = quizList.style.display === 'block';
+
+                // Hiển thị/ẩn danh sách quiz
+                quizList.style.display = isVisible ? 'none' : 'block';
+
+                // Cập nhật mũi tên (xoay mũi tên)
+                button.classList.toggle('fa-chevron-down', !isVisible);
+                button.classList.toggle('fa-chevron-up', isVisible);
+            });
+        });
+    });
+
+</script>
+
+<script src="/lesson/js/scripts.min.js"></script>
+<script src="/lesson/js/main.min.js"></script>
+<script src="/lesson/js/custom.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+/*Custom Layout*/
+a {
+    text-decoration: none;
+}
+
+/*Custom Course*/
+.course-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.course-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+.course-card i {
+    font-size: 3rem;
+    color: #007bff;
+}
+.course-card h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+}
+.course-card p {
+    color: #555;
+}
+
+.container .text-center h2 {
+    font-weight: 700;
+    color: #333;
+}
+.container .row .col-md-3 i {
+    font-size: 3rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+.container .row .col-md-3 h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1rem;
+}
+.container .row .col-md-3 p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+
+
