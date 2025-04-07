@@ -9,45 +9,180 @@
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}">
     <!-- FontAwesome CSS -->
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/assets/css/all.min.css}">
-    <link th:fragment="link-css" rel="stylesheet" th:href="@{/assets/css/uf-style.css}">
+
     <title>Đăng Ký</title>
 </head>
 <body>
-<div class="uf-form-signin">
-    <div class="text-center">
-        <a href="https://uifresh.net/"><img src="./assets/img/logo-fb.png" alt="" width="100" height="100"></a>
-        <h1 class="text-white h3">Đăng Ký</h1>
+<!-- Section: Design Block -->
+<section class="background-radial-gradient overflow-hidden">
+    <style>
+        .background-radial-gradient {
+            background-color: hsl(218, 41%, 15%);
+            background-image: radial-gradient(650px circle at 0% 0%,
+            hsl(218, 41%, 35%) 15%,
+            hsl(218, 41%, 30%) 35%,
+            hsl(218, 41%, 20%) 75%,
+            hsl(218, 41%, 19%) 80%,
+            transparent 100%),
+            radial-gradient(1250px circle at 100% 100%,
+                    hsl(218, 41%, 45%) 15%,
+                    hsl(218, 41%, 30%) 35%,
+                    hsl(218, 41%, 20%) 75%,
+                    hsl(218, 41%, 19%) 80%,
+                    transparent 100%);
+        }
+
+        #radius-shape-1 {
+            height: 220px;
+            width: 220px;
+            top: -60px;
+            left: -130px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+        }
+
+        #radius-shape-2 {
+            border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+            bottom: -60px;
+            right: -110px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(#44006b, #ad1fff);
+            overflow: hidden;
+        }
+        .bg-glass {
+            background-color: hsla(0, 0%, 100%, 0.9) !important;
+            backdrop-filter: saturate(200%) blur(25px);
+        }
+        .btn-primary {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+        <div class="row gx-lg-5 align-items-center mb-5">
+            <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+                <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+                    The best offer <br />
+                    <span style="color: hsl(218, 81%, 75%)">for your business</span>
+                </h1>
+                <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%)">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Temporibus, expedita iusto veniam atque, magni tempora mollitia
+                    dolorum consequatur nulla, neque debitis eos reprehenderit quasi
+                    ab ipsum nisi dolorem modi. Quos?
+                </p>
+            </div>
+
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                <div class="card bg-glass">
+                    <div class="card-body px-4 py-5 px-md-5">
+                        <h1 class="text-blue h3">Tạo tài khoản mới</h1>
+                        <form class="mt-4" th:action="@{/register}" th:object="${user}" method="post">
+                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Your name">
+                                <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                            </div>
+
+                            <!-- Password input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label">Email</label>
+                                <input type="text" class="form-control" th:field="*{email}" id="email" placeholder="Email address">
+                                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                            </div>
+
+                            <!-- Email input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label">Username</label>
+                                <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="Username">
+                                <span class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                            </div>
+
+                            <!-- Password input -->
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <label class="form-label">Password</label>
+                                <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Password">
+                                <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                            </div>
+
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-center mb-4">
+                                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+                                <label class="form-check-label" for="form2Example33">
+                                    Subscribe to our newsletter
+                                </label>
+                            </div>
+
+                            <!-- Submit button -->
+                            <div class="text-center">
+                                <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">
+                                    Đăng Ký
+                                </button>
+                            </div>
+                            <div class="mt-4 text-center">
+                                <span class="text-blue">Đã Có Tài khoản?</span>
+                                <a href="/login">Login</a>
+                            </div>
+                            <!-- Register buttons -->
+                            <div class="text-center">
+                                <p>or sign up with:</p>
+                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+
+                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-google"></i>
+                                </button>
+
+                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-twitter"></i>
+                                </button>
+
+                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-link btn-floating mx-1">
+                                    <i class="fab fa-github"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <form class="mt-4" th:action="@{/register}" th:object="${user}" method="post">
-        <div class="input-group uf-input-group input-group-lg mb-3">
-            <span class="input-group-text fa fa-user"></span>
-            <input type="text" class="form-control" th:field="*{name}" id="name" placeholder="Your name">
-            <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-        </div>
-        <div class="input-group uf-input-group input-group-lg mb-3">
-            <span class="input-group-text fa fa-envelope"></span>
-            <input type="text" class="form-control" th:field="*{email}" id="email" placeholder="Email address">
-            <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-        </div>
-        <div class="input-group uf-input-group input-group-lg mb-3">
-            <span class="input-group-text fa fa-user"></span>
-            <input type="text" class="form-control" th:field="*{username}" id="username" placeholder="Username">
-            <span class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-        </div>
-        <div class="input-group uf-input-group input-group-lg mb-3">
-            <span class="input-group-text fa fa-lock"></span>
-            <input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Password">
-            <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-        </div>
-        <div class="d-grid mb-4">
-            <button type="submit" class="btn uf-btn-primary btn-lg">Đăng Ký</button>
-        </div>
-        <div class="mt-4 text-center">
-            <span class="text-white">Đã Có Tài khoản?</span>
-            <a href="/login">Login</a>
-        </div>
-    </form>
+</section>
+<div
+        class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-secondary">
+    <!-- Copyright -->
+    <div class="text-white mb-3 mb-md-0">
+        Copyright © 2020. All rights reserved.
+    </div>
+    <!-- Copyright -->
+
+    <!-- Right -->
+    <div>
+        <a href="#!" class="text-white me-4">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#!" class="text-white me-4">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#!" class="text-white me-4">
+            <i class="fab fa-google"></i>
+        </a>
+        <a href="#!" class="text-white">
+            <i class="fab fa-linkedin-in"></i>
+        </a>
+    </div>
+    <!-- Right -->
 </div>
+<!-- Section: Design Block -->
 
 <!-- JavaScript -->
 
