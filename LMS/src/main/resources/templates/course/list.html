@@ -144,7 +144,7 @@
                 </div>
             </div>
             <a class="btn-primarysave" th:href="@{/courses/add}" sec:authorize="hasAnyAuthority('ADMIN')">
-                <i class="fas fa-plus-circle"></i> Thêm mới
+                <i class="fas fa-plus-circle"></i> Thêm mới khóa học
             </a>
             <div class="col-md-4 mb-4" th:each="course : ${courses}">
                 <div class="card-body" data-wow-delay="0.1s">
