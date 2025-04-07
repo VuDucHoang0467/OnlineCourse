@@ -1,249 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/html">
 <head>
-    <title th:text="${course.name} ?: 'Course Detail'">Chi Tiết khóa học</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <th:block th:replace="layout::link-css"></th:block>
-    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/style.css}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>Courses Details</title>
+    <!--Progress-->
+    <link rel="stylesheet" type="text/css" href="/progress/styles/bootstrap4/bootstrap.min.css">
+    <link href="/progress/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/progress/styles/elements_styles.css">
+    <link rel="stylesheet" type="text/css" href="/progress/styles/elements_responsive.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/coursedetail/css/bootstrap.css" />
+    <link rel="stylesheet" href="/coursedetail/css/flaticon.css" />
+    <link rel="stylesheet" href="/coursedetail/css/themify-icons.css" />
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/coursedetail/vendors/owl-carousel/owl.carousel.min.css}">
+    <link rel="stylesheet" href="/coursedetail/vendors/nice-select/css/nice-select.css" />
+    <!-- main css -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/coursedetail/css/style.css}">
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/lib/animate.min.css}">
+    <!-- Customized Bootstrap Stylesheet -->
     <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Template Stylesheet -->
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/stylelearning.css}">
+    <link th:fragment="link-css" rel="stylesheet" th:href="@{/snow/snow.css}">
     <style>
-        a {
-            text-decoration: none;
-        }
 
-        .course-details-container {
-            margin-top: 40px;
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .course-image {
-            max-height: 500px;
-            width: 95%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .BackButton {
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .course-info {
-            margin-top: 15px;
-            font-size: 16px;
-            color: #555;
-        }
-        .course-info p {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #f1f3f5;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-        }
-        .course-info p strong {
-            margin-right: 10px;
-            color: #333;
-            font-weight: 600;
-        }
-        .course-info i {
-            color: #007bff;
-            margin-right: 8px;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-            border-color: #1e7e34;
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Căn chỉnh chung cho khu vực bình luận */
-        .comments-section {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .comments-section h3 {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        .list-group-item {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            padding: 15px 20px;
-            transition: all 0.3s ease;
-        }
-
-        .list-group-item:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-            transform: translateY(-2px);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .comment-header strong {
-            font-size: 16px;
-            color: #333;
-        }
-
-        .comment-header span {
-            font-size: 14px;
-            color: #888;
-        }
-
-        .comment-content {
-            margin-top: 10px;
-            margin-bottom: 15px;
-            font-size: 15px;
-            line-height: 1.6;
-            color: #555;
-        }
-
-        .comment-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .comment-actions .btn {
-            font-size: 14px;
-            padding: 8px 12px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .comment-actions .btn i {
-            margin-right: 5px;
-        }
-
-        .comments-section h3 {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        .comments-count {
-            font-size: inherit; /* Đồng bộ kích thước với chữ "Bình luận" */
-            font-weight: normal; /* Giữ phong cách giống với chữ "Bình luận" */
-            color: #007bff; /* Màu xanh giống chữ "Bình luận" */
-            margin-left: 10px; /* Khoảng cách giữa chữ và số */
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-            color: #fff;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-            color: #fff;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            border-color: #6c757d;
-            color: #fff;
-        }
-
-        .btn-secondary:hover {
-            background-color: #5a6268;
-            box-shadow: 0 4px 10px rgba(108, 117, 125, 0.4);
-        }
-
-        textarea.form-control {
-            resize: none;
-            font-size: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: none;
-            transition: border-color 0.3s ease;
-        }
-
-        textarea.form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
-        }
-
-        .add-comment {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .add-comment h3 {
-            color: #007bff;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .form-group textarea {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 16px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .form-group textarea:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            font-size: 16px;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        .hidden {
+            display: none;
         }
 
         /*Vùng ngôi sao*/
@@ -323,157 +128,358 @@
         }
     </style>
 </head>
+
 <body>
-<th:block th:replace="layout::header"></th:block>
-<div class="container">
-    <div class="course-details-container">
-        <div class="row">
-            <div class="col-md-4">
-                <img th:src="@{${course.imageData}}" alt="Hình Ảnh Khóa Học" class="course-image img-fluid">
-            </div>
-            <div class="col-md-8">
-                <h2 th:text="${course.name}" class="display-6"></h2>
-                <div class="course-info">
-                    <p>
-                        <i class="fa fa-book"></i>
-                        <strong>Loại khóa học:</strong> <span th:text="${course.courseCatalog.name}"></span>
-                    </p>
-                    <p>
-                        <i class="fa fa-info-circle"></i>
-                        <strong>Mô tả Khóa học:</strong> <span th:text="${course.description}"></span>
-                    </p>
-                    <p>
-                        <i class="fa fa-clock"></i>
-                        <strong>Thời lượng:</strong> <span th:text="${course.duration} + ' giờ'"></span>
-                    </p>
-                    <p>
-                        <i class="fa fa-calendar-alt"></i>
-                        <strong>Thời gian tạo:</strong>
-                        <span th:if="${course.creationTime != null}" th:text="${#temporals.format(course.creationTime, 'dd/MM/yyyy HH:mm:ss')}"></span>
-                        <span th:if="${course.creationTime == null}">Chưa xác định</span>
-                    </p>
-                </div>
-
-                <!-- Nút Thêm Bài Học -->
-                <div class="text-center mt-4">
-                    <a th:href="@{/lessons/add/{courseId}(courseId=${course.id})}"
-                       class="btn btn-warning btn-lg shadow">
-                        <i class="fa fa-plus-circle"></i> Thêm bài học
-                    </a>
-                </div>
-
-                <!-- Thêm nút tham gia khóa học -->
-                <div class="text-center mt-4">
-                    <form th:if="${!isEnrolled}" th:action="@{/enrollments/enroll}" method="post">
-                        <!-- Nút tham gia khóa học -->
-                        <input type="hidden" name="courseId" th:value="${course.id}" />
-                        <button type="submit" class="btn btn-success btn-lg shadow">
-                            <i class="fa fa-check-circle"></i> Tham gia Khóa học
-                        </button>
-                    </form>
-
-                    <div th:if="${isEnrolled}">
-                        <!-- Nút đã tham gia khóa học -->
-                        <a th:href="@{/lessons/list/{courseId}(courseId=${course.id})}"
-                           class="btn btn-info btn-lg shadow">
-                            <i class="fa fa-list"></i> Xem danh sách bài học
-                        </a>
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+</div>
+<th:block th:replace="layout :: header"></th:block>
+<!--================ Start Header Menu Area =================-->
+<!--================Home Banner Area =================-->
+<section class="banner_area">
+    <div class="banner_inner d-flex align-items-center">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="banner_content text-center">
+                        <h2>Course Details</h2>
+                        <div class="page_link">
+                            <a href="index.html">Home</a>
+                            <a href="courses.html">Courses</a>
+                            <a href="course-details.html">Courses Details</a>
+                        </div>
                     </div>
                 </div>
-                <!-- Kết thúc nút tham gia khóa học -->
             </div>
         </div>
     </div>
+</section>
+<!--================End Home Banner Area =================-->
 
-    <div class="comments-section mt-5">
-        <h3>
-            Bình luận
-            <span class="comments-count" th:text="'(' + ${commentCount} + ')'">0</span>
-        </h3>
-        <ul class="list-group">
-            <li class="list-group-item" th:each="comment : ${comments}">
-                <div class="comment-header">
-                    <strong th:text="${comment.user.username}">Username</strong>
-                    <span th:text="${#temporals.format(comment.createdAt, 'dd/MM/yyyy HH:mm')}">Thời gian</span>
+<!--================ Start Course Details Area =================-->
+<section class="course_details_area section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 course_details_left">
+                <div class="main_image">
+                    <img class="img-fluid" th:src="@{${course.imageData}}" alt="Hình Ảnh Khóa Học">
                 </div>
-
-                <!-- Hiển thị ngôi sao đánh giá -->
-                <div class="rating-stars">
-                    <!-- Hiển thị sao vàng -->
-                    <span th:each="star : ${#numbers.sequence(1, comment.rating)}" class="star">&#9733;</span>
-
-                    <!-- Hiển thị sao xám (chỉ khi số sao < 5) -->
-                    <span th:if="${comment.rating < 5}"
-                          th:each="star : ${#numbers.sequence(comment.rating + 1, 5)}"
-                          class="star-empty">&#9733;</span>
+                <div class="content_wrapper">
+                    <h4 class="title">Mô tả khóa học</h4>
+                    <div class="content">
+                        <span th:text="${course.description}"></span>
+                    </div>
+                    <div th:if="${isEnrolled}">
+                        <div class="course-progress-section mt-5">
+                            <h3 class="text-center" style="color: lightseagreen; border-bottom: 2px solid lightseagreen; padding-bottom: 20px;">
+                                Tiến độ học tập
+                            </h3>
+                            <div class="row elements_loaders_container">
+                            <div class="col-lg-3 loader_col">
+                                <!-- Loader -->
+                                <div class="loader" th:data-perc="${lessonProgressPercent}/100"></div>
+                                <div class="loader_text text-center">Bài học đã hoàn thành</div>
+                            </div>
+                            <div class="col-lg-3 loader_col">
+                                <!-- Loader -->
+                                <div class="loader" th:data-perc="${quizProgressPercent}/100"></div>
+                                <div class="loader_text text-center">Bài tập trắc nghiệm đã hoàn thành</div>
+                                <span></span>
+                            </div>
+                            <div class="col-lg-3 loader_col">
+                                <!-- Loader -->
+                                <div class="loader" th:data-perc="${totalProgressPercent}/100"></div>
+                                <div class="loader_text text-center">Khóa học đã hoàn thành</div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${!isEnrolled}" class="alert alert-warning mt-5 text-center">
+                        <h5>Vui lòng tham gia khóa học để theo dõi tiến trình học tập!</h5>
+                    </div>
+                    <h4 class="title">Danh sách bài học:</h4>
+                    <div th:if="${isEnrolled}" class="content">
+                        <ul th:each="lesson : ${course.lessons}" class="course_list">
+                            <li class="justify-content-between d-flex">
+                                <p th:text="${lesson.name}">Tên bài học</p>
+                                <span th:if="${lessonCompletedMap[lesson.id]}"><img src="/img/check.png" alt="Icon" style="width: 20px;height: 20px" />
+                            </span>
+                                <span th:if="${!lessonCompletedMap[lesson.id]}"><img src="/img/error.png" alt="Icon" style="width: 20px;height: 20px" />
+                            </span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
-                <!-- Hiển thị nội dung bình luận -->
-                <div class="comment-content" th:if="${comment.user.username != #authentication.name}">
-                    <p th:text="${comment.content}"></p>
+            </div>
+            <div class="col-lg-4 right-contents">
+                <ul>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Tên khóa học</p>
+                            <span th:text="${course.name}" class="or"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Loại khóa học </p>
+                            <span th:text="${course.courseCatalog.name}"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Thời lượng</p>
+                            <span th:text="${course.duration} + ' giờ'"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Người tạo:</p>
+                            <span th:text="${creatorName}">Đang cập nhật</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Trạng thái khóa học:</p>
+                            <span th:if="${totalProgressPercent == 100}" class="badge bg-success">Đã hoàn thành</span>
+                            <span th:if="${totalProgressPercent < 100}" class="badge bg-warning">Chưa hoàn thành</span>
+                        </a>
+                    </li>
+                </ul>
+                <div sec:authorize="hasAnyAuthority('ADMIN')">
+                    <a th:href="@{/lessons/add/{courseId}(courseId=${course.id})}"
+                       class="primary-btn2 text-uppercase enroll rounded-0 text-white">
+                        <i class="fa fa-plus-circle"></i> Thêm bài học
+                    </a>
                 </div>
+                <form th:if="${!isEnrolled}" th:action="@{/enrollments/enroll}" method="post">
+                    <input type="hidden" name="courseId" th:value="${course.id}" />
+                    <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0 text-white">
+                        <i class="fa fa-check"></i> Tham gia Khóa học
+                    </button>
+                </form>
+                <div th:if="${isEnrolled}">
+                    <!-- Nút đã tham gia khóa học -->
+                    <a th:href="@{/lessons/list/{courseId}(courseId=${course.id})}"
+                       class="primary-btn2 text-uppercase enroll rounded-0 text-white">
+                        <i class="fa fa-list"></i> Xem danh sách bài học
+                    </a>
+                </div>
+                <h4 class="title">Đánh giá</h4>
+                <div class="content">
+                    <form th:action="@{/courses/details/comments/{id}(id=${course.id})}" method="post">
+                        <div class="review-top row pt-40">
+                            <div class="col-lg-12">
+                                <h6 class="mb-15">Để lại đánh giá</h6>
+                                <div class="d-flex flex-row reviews justify-content-between">
+                                    <!-- Đánh giá ngôi sao -->
+                                    <div class="star-rating">
+                                        <input type="radio" id="star5" name="rating" value="5" required />
+                                        <label for="star5" title="5 sao">&#9733;</label>
 
-                <!-- Sửa bình luận -->
-                <div th:if="${comment.user.username == #authentication.name}">
-                    <form th:action="@{/courses/details/comments/edit/{commentId}(commentId=${comment.id})}" method="post">
-                        <!-- Textarea chỉnh sửa nội dung bình luận -->
-                        <textarea name="content" class="form-control" rows="2" th:text="${comment.content}"></textarea>
+                                        <input type="radio" id="star4" name="rating" value="4" />
+                                        <label for="star4" title="4 sao">&#9733;</label>
 
-                        <!-- Nút hành động -->
-                        <div class="comment-actions mt-3">
-                            <button type="submit" class="btn btn-success">
-                                <i class="fa fa-save"></i> Lưu
+                                        <input type="radio" id="star3" name="rating" value="3" />
+                                        <label for="star3" title="3 sao">&#9733;</label>
+
+                                        <input type="radio" id="star2" name="rating" value="2" />
+                                        <label for="star2" title="2 sao">&#9733;</label>
+
+                                        <input type="radio" id="star1" name="rating" value="1" />
+                                        <label for="star1" title="1 sao">&#9733;</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feedeback">
+                            <h6>Your Feedback</h6>
+                            <textarea name="content" class="form-control" cols="10" rows="10" placeholder="Viết bình luận..." required></textarea>
+                        </div>
+                        <div class="mt-10 text-right">
+                            <button type="submit" class="primary-btn2 text-right rounded-0 text-white">
+                                <i class="fa fa-paper-plane"></i> Gửi bình luận
                             </button>
-                            <a th:href="@{/courses/details/{courseId}(courseId=${course.id})}" class="btn btn-secondary">
-                                <i class="fa fa-times"></i> Hủy
-                            </a>
-                            <a th:href="@{/courses/details/comments/delete/{commentId}(commentId=${comment.id})}"
-                               class="btn btn-danger"
-                               onclick="return confirm('Bạn có chắc chắn muốn xóa bình luận này?')">
-                                <i class="fa fa-trash"></i> Xóa
-                            </a>
                         </div>
                     </form>
+                    <div class="comments-section mt-5">
+                        <h3>
+                            Bình luận
+                            <span class="comments-count" th:text="'(' + ${commentCount} + ')'">0</span>
+                        </h3>
+                        <div class="comments-area mb-30">
+                            <div class="comment-list">
+                                <div class="single-comment single-reviews justify-content-between d-flex">
+                                    <div class="user justify-content-between d-flex" th:each="comment : ${comments}">
+                                        <div class="thumb">
+                                            <img th:src="@{${comment.user.imageData}}" alt="" style="width: 50px; height: 50px;">
+                                        </div>
+                                        <div class="desc">
+                                            <h5><a th:text="${comment.user.username}">Emilly Blunt</a>
+                                                <div class="star" style="color: #ffcc00">
+                                                    <span th:each="star : ${#numbers.sequence(1, comment.rating)}" class="star">&#9733;</span>
+                                                    <span th:if="${comment.rating < 5}" th:each="star : ${#numbers.sequence(comment.rating + 1, 5)}" class="star-empty">&#9733;</span>
+                                                </div>
+                                                <div class="star">
+                                                <span th:text="${#temporals.format(comment.createdAt, 'dd/MM/yyyy HH:mm')}">Thời gian</span>
+                                                </div>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fa fa-ellipsis-h"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <li><a class="dropdown-item edit-comment" href="#" onclick="toggleEditForm(event, 'edit-form-{{comment.id}}')">Sửa</a></li>
+                                                        <li><a class="dropdown-item" th:href="@{/courses/details/comments/delete/{commentId}(commentId=${comment.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa bình luận này?')">Xóa</a></li>
+                                                    </ul>
+                                                </div>
+                                            </h5>
+                                            <p class="comment" th:text="${comment.content}">
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                                eiusmod tempor incididunt ut labore et dolore.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sửa bình luận -->
+                        <div th:each="comment : ${comments}">
+                            <div th:if="${comment.user.username == #authentication.name}" class="edit-form-container">
+                                <form th:action="@{/courses/details/comments/edit/{commentId}(commentId=${comment.id})}" method="post" id="edit-form-{{comment.id}}" class="edit-form hidden">
+                                    <!-- Textarea chỉnh sửa nội dung bình luận -->
+                                    <textarea name="content" class="form-control" rows="2" th:text="${comment.content}"></textarea>
+
+                                    <!-- Nút hành động -->
+                                    <div class="comment-actions mt-3">
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="fa fa-save"></i> Lưu
+                                        </button>
+                                        <a th:href="@{/courses/details/{courseId}(courseId=${course.id})}" class="btn btn-secondary">
+                                            <i class="fa fa-times"></i> Hủy
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item" th:each="comment : ${comments}">
+                                <!-- Hiển thị danh sách câu trả lời -->
+                                <ul class="single-comment single-reviews justify-content-between d-flex" th:each="reply : ${comment.replies}">
+                                    <li class="user justify-content-between d-flex">
+                                        <div class="desc">
+                                            <div style="color: royalblue">
+                                                <strong>Trả lời:</strong>
+                                            </div>
+                                            <h5><a th:text="${reply.user.username}">Emilly Blunt</a>
+                                                <div class="star">
+                                                    <span th:text="${#temporals.format(comment.createdAt, 'dd/MM/yyyy HH:mm')}">Thời gian</span>
+                                                </div>
+                                            <div class="dropdown star">
+                                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-h"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <li><a class="dropdown-item edit-comment" href="#" onclick="toggleEditForm(event, 'edit-form-reply-{{reply.id}}')">Sửa</a></li>
+                                                    <li><a class="dropdown-item" th:href="@{/courses/details/comments/reply/delete/{replyId}(replyId=${reply.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa câu trả lời này?')">Xóa</a></li>
+                                                </ul>
+                                            </div>
+                                            </h5>
+                                            <div class="comment">
+                                                <p th:text="${reply.content}">Nội dung câu trả lời</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!-- Sửa câu trả lời -->
+                                <div class="single-comment single-reviews justify-content-between d-flex" th:each="reply : ${comment.replies}">
+                                <div th:if="${reply.user.username == #authentication.name}" class="edit-form-container">
+                                    <form th:action="@{/courses/details/comments/reply/edit/{replyId}(replyId=${reply.id})}" method="post" id="edit-form-reply-{{reply.id}}" class="edit-form hidden">
+                                        <!-- Textarea chỉnh sửa nội dung câu trả lời -->
+                                        <textarea name="content" class="form-control" rows="2" th:text="${reply.content}"></textarea>
+                                        <!-- Nút hành động -->
+                                        <div class="comment-actions mt-3">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fa fa-save"></i> Lưu
+                                            </button>
+                                            <a th:href="@{/courses/details/{courseId}(courseId=${course.id})}" class="btn btn-secondary">
+                                                <i class="fa fa-times"></i> Hủy
+                                            </a>
+                                        </div>
+                                    </form>
+                                </div>
+                                </div>
+                                <!-- Form thêm câu trả lời -->
+                                <div>
+                                    <form th:action="@{/courses/details/comments/reply/{commentId}(commentId=${comment.id})}" method="post">
+                                        <textarea name="content" class="form-control mb-2" rows="2" placeholder="Viết câu trả lời..." required></textarea>
+                                        <button type="submit" class="primary-btn2 text-right rounded-0 text-white">
+                                            <i class="fa fa-reply"></i> Trả lời
+                                        </button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Form Thêm Bình Luận -->
-    <div class="add-comment mt-4">
-        <h3>Thêm bình luận và đánh giá</h3>
-        <form th:action="@{/courses/details/comments/{id}(id=${course.id})}" method="post">
-            <!-- Đánh giá ngôi sao -->
-            <div class="star-rating">
-                <input type="radio" id="star5" name="rating" value="5" required />
-                <label for="star5" title="5 sao">&#9733;</label>
-
-                <input type="radio" id="star4" name="rating" value="4" />
-                <label for="star4" title="4 sao">&#9733;</label>
-
-                <input type="radio" id="star3" name="rating" value="3" />
-                <label for="star3" title="3 sao">&#9733;</label>
-
-                <input type="radio" id="star2" name="rating" value="2" />
-                <label for="star2" title="2 sao">&#9733;</label>
-
-                <input type="radio" id="star1" name="rating" value="1" />
-                <label for="star1" title="1 sao">&#9733;</label>
             </div>
+        </div>
+    </div>
+</section>
+<!--================ End Course Details Area =================-->
+<th:block th:replace="layout :: footer"></th:block>
+<!--================ End footer Area  =================-->
 
-            <div class="form-group">
-                <textarea name="content" class="form-control" rows="3" placeholder="Viết bình luận..." required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary mt-3">
-                <i class="fa fa-paper-plane"></i> Gửi bình luận
-            </button>
-        </form>
-    </div>
-    <div class="text-center BackButton">
-        <a th:href="@{/courses}" class="btn btn-primary">Back to Courses</a>
-    </div>
-</div>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<th:block th:replace="layout::footer"></th:block>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+<script src="js/owl-carousel-thumb.min.js"></script>
+<script src="js/jquery.ajaxchimp.min.js"></script>
+<script src="js/mail-script.js"></script>
+<script>
+    function toggleEditForm(event, formId) {
+        event.preventDefault(); // Ngăn chặn hành động mặc định của link
+        var form = document.getElementById(formId);
+
+        // Kiểm tra xem form có đang ẩn hay không
+        if (form.classList.contains('hidden')) {
+            form.classList.remove('hidden'); // Hiện form
+        } else {
+            form.classList.add('hidden'); // Ẩn form nếu đã hiển thị
+        }
+    }
+</script>
+<!--gmaps Js-->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+<script src="/coursedetail/js/gmaps.min.js"></script>
+<script src="/coursedetail/js/theme.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!--Progress-->
+<script src="/progress/js/jquery-3.2.1.min.js"></script>
+<script src="/progress/styles/bootstrap4/popper.js"></script>
+<script src="/progress/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="/progress/plugins/greensock/TweenMax.min.js"></script>
+<script src="/progress/plugins/greensock/TimelineMax.min.js"></script>
+<script src="/progress/plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="/progress/plugins/greensock/animation.gsap.min.js"></script>
+<script src="/progress/plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="/progress/plugins/progressbar/progressbar.min.js"></script>
+<script src="/progress/plugins/scrollTo/jquery.scrollTo.min.js"></script>
+<script src="/progress/plugins/easing/easing.js"></script>
+<script src="/progress/js/elements_custom.js"></script>
 </body>
 </html>
